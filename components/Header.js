@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from '@emotion/styled'
 import Image from 'next/image'
+import {rem} from 'polished'
 
 function Header({isDark}) {
   return (
@@ -26,8 +27,8 @@ padding:20px;
     .logo-text {
         color: #333333;
         font-weight: bold;
-        font-size: 20px;
-        margin-left: 20px;
+        font-size: ${rem(20)};
+        margin-left: ${rem(20)};
     }
 }
 `
