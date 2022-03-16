@@ -2,15 +2,21 @@ import Head from 'next/head'
 import Image from 'next/image'
 import fetch from 'isomorphic-unfetch'
 import Card from '../components/Card'
+import {Flex, Box} from 'reflexbox'
 
 export default function Home({movies}) {
-  console.log("movies",movies)
   return (
-    <div className='container'>
+    <Box variant="container" >
+    <Box as="h2" my={40} >Latest Movies</Box>
+      
+      <Flex justifyContent="space-between" flexDirection={{ _ :"column", md: "row"}} >
      {movies.data.map (movie => (
-       <Card key={movie.id} movie={movie}/>
-     ))}  
-    </div>
+       <Box key={movie.id} width={{_: "100%", md: "30%"}}>
+       <Card  movie={movie}/>
+       </Box>
+     ))} 
+     </Flex> 
+    </Box>
   )
 }
 
