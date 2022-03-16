@@ -6,7 +6,7 @@ import {Flex,Box} from 'reflexbox'
 import Navigation from './Navigation'
 import Link from 'next/link'
 
-function Header({isDark}) {
+function Header({isDark, navigation}) {
   return (
     <HearderStyles isDark={isDark}>
      <Box variant='container'>
@@ -19,7 +19,7 @@ function Header({isDark}) {
         </a>
         </Link>
      </div>
-     <Navigation/>
+     <Navigation navigation={navigation}/>
      </Flex>
      </Box>
      </HearderStyles>
@@ -30,9 +30,11 @@ const HearderStyles = styled.header`
 background : ${props =>props.isDark ? '#000000' : '#efefef'};
 padding:20px;
 .logo {
+    a{
     display: flex;
     align-items: center;
     position:relative;
+    }
     .logo-text {
         color: #333333;
         font-weight: bold;

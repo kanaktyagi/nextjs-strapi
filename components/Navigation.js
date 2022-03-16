@@ -3,10 +3,24 @@ import styled from '@emotion/styled'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
 
-function Navigation() {
+function Navigation({navigation}) {
+    console.log("navigation", navigation)
     const router = useRouter()
+    console.log("router.pathname" , router.pathname)
+
   return (
-    <NavigationStyled>Navigation</NavigationStyled>
+    <NavigationStyled>
+        <ul>  
+        { navigation.map(item => (
+            <li key={item.id}>
+                <Link href={item.attributes.slug}> 
+                    <a className={router.pathname === item.attributes.slug ? "active" : " "}>{item.attributes.title} </a>
+                </Link>
+            </li>
+        ))}  
+           
+        </ul>
+    </NavigationStyled>
   )
 }
 
@@ -24,12 +38,17 @@ li {
 }
 a {
     text-decoration: none;
-    color: #4C9EE3;
+    color: blue;
     &:hover{
         text-decoration: underline;
     } 
     &:active{
-        color: #EF6800;
-    }
+        color: orange;
+    } 
+    a{
+        :active {
+            color: pink;
+        }
+    } 
 }
 `
