@@ -2,17 +2,26 @@ import React from 'react'
 import styled from '@emotion/styled'
 import Image from 'next/image'
 import {rem} from 'polished'
+import {Flex,Box} from 'reflexbox'
+import Navigation from './Navigation'
+import Link from 'next/link'
 
 function Header({isDark}) {
   return (
     <HearderStyles isDark={isDark}>
-     <div className='container'>
-       <div className="logo">
-     <Image src="/images/logo.svg" alt="sites logo" width="20" height="20"/>
-     <span className="logo-text">Next Movies</span>
+     <Box variant='container'>
+     <Flex justifyContent="space-between" alignItems="center">
+       <div className="logo"> 
+       <Link href="/">
+       <a>
+        <Image src="/images/logo.svg" alt="sites logo" width="20" height="20"/>
+        <span className="logo-text">Next Movies</span>
+        </a>
+        </Link>
      </div>
-     
-     </div>
+     <Navigation/>
+     </Flex>
+     </Box>
      </HearderStyles>
   )
 }
