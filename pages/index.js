@@ -1,23 +1,26 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import fetch from 'isomorphic-unfetch'
+import Card from '../components/Card'
 
-export default function Home({data}) {
-  console.log("data",data)
+export default function Home({movies}) {
+  console.log("movies",movies)
   return (
     <div className='container'>
-      <h1> This is our front page</h1>    
+     {movies.data.map (movie => (
+       <Card key={movie.id} movie={movie}/>
+     ))}  
     </div>
   )
 }
 
 export async function getServerSideProps() {
   const {NEXT_PUBLIC_API_URL} = process.env
-  const res = await fetch(`${NEXT_PUBLIC_API_URL}/api/movies`)
+  const res = await fetch(`${NEXT_PUBLIC_API_URL}/api/movies?populate=*`)
   const data = await res.json()
    return {
     props: {
-          data
+          movies: data
     }
   }
 }
