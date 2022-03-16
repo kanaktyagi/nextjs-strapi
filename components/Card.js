@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-
+import Link from 'next/link'
 import React from 'react'
 
 export default function Card({movie}) {
@@ -12,6 +12,9 @@ export default function Card({movie}) {
    <div className='body'>
    <h3>{movie.attributes.Title}</h3>
    <p dangerouslySetInnerHTML={{__html: movie.attributes.description}}/>
+   <Link href="/movies/api/[id]" as={`movies/api/${movie.id}`}>
+   <a>More about this movies</a>
+   </Link>
    </div>
    </CardStyled>
   )
@@ -34,6 +37,12 @@ h3 {
 p {
   color: #666666;
   line-height: 1.5;
+}
+a{
+  display: inline-block;
+  margin: 20px 0;
+  color: #4d1a7f;
+  text-decoration: underline;
 }
  
 `

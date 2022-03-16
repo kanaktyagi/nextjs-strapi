@@ -7,7 +7,6 @@ import App from 'next/app'
 import fetch from 'isomorphic-unfetch'
 
 export default function MyApp({ Component, pageProps,data }) {
-  console.log("theme", data)
   return (
     <div>
     <ThemeProvider theme={theme}>

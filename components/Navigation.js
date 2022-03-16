@@ -4,10 +4,7 @@ import Link from 'next/link'
 import {useRouter} from 'next/router'
 
 function Navigation({navigation}) {
-    console.log("navigation", navigation)
-    const router = useRouter()
-    console.log("router.pathname" , router.pathname)
-
+   const router = useRouter()
   return (
     <NavigationStyled>
         <ul>  

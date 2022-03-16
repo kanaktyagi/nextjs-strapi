@@ -9,7 +9,7 @@ export default function Home({movies}) {
     <Box variant="container" >
     <Box as="h2" my={40} >Latest Movies</Box>
       
-      <Flex justifyContent="space-between" flexDirection={{ _ :"column", md: "row"}} >
+      <Flex justifyContent="space-between" flexDirection={{ _ :"column", md: "row"}} mb={100} >
      {movies.data.map (movie => (
        <Box key={movie.id} width={{_: "100%", md: "30%"}}>
        <Card  movie={movie}/>
