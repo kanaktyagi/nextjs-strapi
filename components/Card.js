@@ -12,7 +12,7 @@ export default function Card({movie}) {
    <div className='body'>
    <h3>{movie.attributes.Title}</h3>
    <p dangerouslySetInnerHTML={{__html: movie.attributes.description}}/>
-   <Link href="/movies/api/[id]" as={`movies/api/${movie.id}`}>
+   <Link href="/movies/api/[slug]" as={`movies/api/${movie.attributes.slug}`}>
    <a>More about this movies</a>
    </Link>
    </div>
