@@ -7,7 +7,7 @@ export default function Card({movie}) {
   return (
    <CardStyled>
    <div className='poster'>
-   <img src={ NEXT_PUBLIC_API_URL + movie.attributes.Poster.data.attributes.formats.medium.url}/>
+   <img src={ NEXT_PUBLIC_API_URL + movie.attributes.Poster.data.attributes.formats?.small?.url}/>
    </div>
    <div className='body'>
    <h3>{movie.attributes.Title}</h3>
