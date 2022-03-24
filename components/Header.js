@@ -7,6 +7,7 @@ import Navigation from './Navigation'
 import Link from 'next/link'
 import {useContext} from 'react'
 import HeaderContext from "./ContextWrapper"
+import ToggleNavigationColorButton from './ToggleNavigationColorButton'
 
 function Header({isDark}) {
   const {menuItems} = useContext(HeaderContext)
@@ -25,6 +26,7 @@ function Header({isDark}) {
         </Link>
      </div>
      <Navigation/>
+     <ToggleNavigationColorButton/>
      </Flex>
      </Box>
      </HearderStyles>
