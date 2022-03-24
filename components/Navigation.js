@@ -2,13 +2,17 @@ import React from 'react'
 import styled from '@emotion/styled'
 import Link from 'next/link'
 import {useRouter} from 'next/router'
+import {useContext} from 'react'
+import HeaderContext from "./ContextWrapper"
 
-function Navigation({navigation}) {
+function Navigation() {
    const router = useRouter()
+  const {menuItems} = useContext(HeaderContext)
+   console.log("inside navig", menuItems)
   return (
     <NavigationStyled>
         <ul>  
-        { navigation.map(item => (
+        { menuItems.map(item => (
             <li key={item.id}>
                 <Link href={item.attributes.slug}> 
                     <a className={router.pathname === item.attributes.slug ? "active" : " "}>{item.attributes.title} </a>

@@ -5,8 +5,13 @@ import {rem} from 'polished'
 import {Flex,Box} from 'reflexbox'
 import Navigation from './Navigation'
 import Link from 'next/link'
+import {useContext} from 'react'
+import HeaderContext from "./ContextWrapper"
 
-function Header({isDark, navigation}) {
+function Header({isDark}) {
+  const {menuItems} = useContext(HeaderContext)
+  console.log("menuItemsss", menuItems)
+  
   return (
     <HearderStyles isDark={isDark}>
      <Box variant='container'>
@@ -19,7 +24,7 @@ function Header({isDark, navigation}) {
         </a>
         </Link>
      </div>
-     <Navigation navigation={navigation}/>
+     <Navigation/>
      </Flex>
      </Box>
      </HearderStyles>

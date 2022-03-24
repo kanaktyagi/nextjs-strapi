@@ -5,13 +5,17 @@ import GlobalStyles from '../components/GlobalStyles/GlobalStyles'
 import theme from '../theme/theme.js'
 import App from 'next/app'
 import fetch from 'isomorphic-unfetch'
+import {ContextWrapper} from '../components/ContextWrapper'
 
 export default function MyApp({ Component, pageProps,data }) {
+  console.log("data", data)
   return (
     <div>
     <ThemeProvider theme={theme}>
     <GlobalStyles/>
-   <Header navigation={data} ></Header>
+    <ContextWrapper  navigation={data}>
+   <Header/>
+   </ContextWrapper>
   <Component {...pageProps} />
   </ThemeProvider>
   </div>
