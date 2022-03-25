@@ -8,7 +8,6 @@ import fetch from 'isomorphic-unfetch'
 import {ContextWrapper} from '../components/ContextWrapper'
 
 export default function MyApp({ Component, pageProps,data }) {
-  console.log("data", data)
   return (
     <div>
     <ThemeProvider theme={theme}>

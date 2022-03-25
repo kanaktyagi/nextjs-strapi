@@ -8,7 +8,6 @@ const {NEXT_PUBLIC_API_URL} = process.env
 
 function MoviesPage({movies}) {
   const [pageno, setPageNo] = useState(1);
-  console.log("pageNO initial", pageno)
   const router = useRouter();
   const [data, setData] = useState(movies);
 
@@ -19,7 +18,6 @@ function MoviesPage({movies}) {
       } else {
         setPageNo(prevState => prevState -1)
       }
-    console.log("pageno", pageno)
   }
   useEffect(() => {
     // declare the data fetching function
@@ -31,11 +29,8 @@ function MoviesPage({movies}) {
   fetchData()
     // make sure to catch any error
     .catch(console.error);
-   
-    console.log("data from block function", data)
     
   },[pageno])
-  console.log("data", data)
   return (
    <Box variant="container" pt={40}>
     <ul> 
