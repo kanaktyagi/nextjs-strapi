@@ -11,7 +11,6 @@ import ToggleNavigationColorButton from './ToggleNavigationColorButton'
 
 function Header({isDark}) {
   const {menuItems} = useContext(HeaderContext)
-  console.log("menuItemsss", menuItems)
   
   return (
     <HearderStyles isDark={isDark}>
