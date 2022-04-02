@@ -23,18 +23,17 @@ export default function MyApp({ Component, pageProps, data }) {
 }
 
 function redirectUser(ctx, location) {
-  
-  console.log("location", location)
+  console.log("location", location);
   if (ctx.ctx.res) {
-   console.log("hii")
-    ctx.ctx.res.writeHead(301, { location: location });
+    console.log("hii");
+    ctx.ctx.res.writeHead(301, { location:"/login" });
     ctx.ctx.res.end();
-   }
-   // else {
-   // window.location = location
- // ctx.req.redirect('/login')
- //console.log("inside", ctx.req.redirect())
- // }
+  }
+  // else {
+  // window.location = location
+  // ctx.req.redirect('/login')
+  // console.log("inside", ctx.req.redirect())
+  // }
 }
 MyApp.getInitialProps = async (appContext) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
@@ -49,6 +48,8 @@ MyApp.getInitialProps = async (appContext) => {
     if (appContext.router.pathname === "/payed-articles") {
       redirectUser(appContext, "/login ");
     }
+  } else {
+    console.log("insde else of jwt");
   }
   return { ...appProps, data };
 };
