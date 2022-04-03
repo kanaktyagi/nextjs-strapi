@@ -1,8 +1,11 @@
 import styled from '@emotion/styled'
-import React, { useState,useRef } from 'react'
+import React, { useState,useRef, useEffect } from 'react'
 import {IoSearch,IoClose }from 'react-icons/io5'
 import { motion,AnimatePresence } from 'framer-motion';
 import  MoonLoader  from 'react-spinners/MoonLoader';
+import useDebounce from '../hooks/debounceHook';
+import axios from 'axios';
+import TvShow from '../tvShow';
 
 const SearchBarContainer = styled(motion.div)`
 display: flex;
@@ -12,7 +15,7 @@ height: 3.8em;
 background-color: #fff;
 border-radius: 6px;
 box-shadow: 0px 2px 12px 3px rgba(0,0,0,0.14);
-overflow: hidden;
+/* overflow-y: auto ; */
 `;
 const SearchInputContainer = styled.div`
 width: 100%;
@@ -65,7 +68,7 @@ cursor: pointer;
 `
 const containerVariant = {
     expanded: {
-        height: "20em",
+        height: "26em",
     },
     collapsed: {
         height: "3.8em"
@@ -82,6 +85,7 @@ height: 100%;
 display: flex;
 flex-direction: column;
 padding: 1rem;
+overflow-y: auto;
 `
 const LineSeparator = styled.span`
 display: flex;
@@ -96,11 +100,28 @@ display: flex;
 align-items: center;
 justify-content: center;
 `
+const WarningMsg = styled.div`
+color: #a1a1a1;
+font-size: 16px;
+display: flex;
+align-self: center;
+justify-self: center;
+`
 function SearchBar() {
     const [isExpanded, setExpanded] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("")
+    const [searchQuery, setSearchQuery] = useState(null)
     const inputRef = useRef()
+    const [isloading, setLoading] = useState(false)
+    const [ tvShows, setTVShows] = useState([])
+  const [noTvShows, setNoTvShows] = useState(false)
+
+    const isEmpty = !tvShows || tvShows.length === 0;
+    useEffect (() => {
+        if(searchQuery)
+        expandContainer()
+    },[searchQuery])
     const expandContainer = () => {
+      //  if(expansionOnValue)
         setExpanded(true)
     }
     const changeHandler=(e) => {
@@ -110,10 +131,38 @@ function SearchBar() {
     const collapseContainer = () => {
         setExpanded(false)
         setSearchQuery("")
+        setLoading(false)
+        setTVShows([])
         if(inputRef.current) {
             inputRef.current.value=""
         }
     }
+
+    const prepareSearchQuery = (query) => {
+        const url = `https://api.tvmaze.com/search/shows?q=${query}`;
+        console.log("encodeURI", encodeURI(url))
+        return encodeURI(url);
+    }
+
+    const searchTvShow = async() => {
+        if(!searchQuery || searchQuery.trim() === ""){
+            return
+        }
+        setLoading(true);
+        const URL = prepareSearchQuery(searchQuery);
+        const response = await axios.get(URL).catch((err)=> {
+            console.log("errorr", err)
+        })
+        if(response) {
+            console.log("response", response.data);
+            if(response.data && response.data.length === 0 ) {
+                setNoTvShows(true)
+            }
+            setTVShows(response.data)
+        }
+        setLoading(false)
+    }
+    useDebounce(searchQuery,500, searchTvShow);
   return (
     <SearchBarContainer transition={containerTransition} animate={isExpanded ? "expanded": "collapsed"} variants={containerVariant}>
         <SearchInputContainer>
@@ -122,7 +171,7 @@ function SearchBar() {
             </SearchIcon>
             <SearchInput ref={inputRef}
              placeholder='search for movies and shows'
-              onFocus={expandContainer}
+             // onFocus={expandContainer}
                onBlur={collapseContainer}
                onChange={changeHandler}
                value={searchQuery}
@@ -141,12 +190,20 @@ function SearchBar() {
         </AnimatePresence>
 
         </SearchInputContainer>
-        <LineSeparator/>
-            <SearchContent> 
-                <LoadingWrapper>
+       {isExpanded && <LineSeparator/>}
+          { isExpanded && <SearchContent> 
+               {isloading && <LoadingWrapper>
                     <MoonLoader loading color='#000' size={20}/>
                 </LoadingWrapper>
+               } 
+               {!isloading && noTvShows && <WarningMsg>No results found for search</WarningMsg> }
+               {!isloading && !isEmpty && <div>
+                    {tvShows.map(tvShow => (
+                        <TvShow key={tvShow.show.id} thumbnailSrc={tvShow.show.image && tvShow.show.image.medium} name={tvShow.show.name} rating={tvShow.show.rating && tvShow.show.rating.average}/>
+                    ))}
+                </div>}
             </SearchContent>
+                    }
     </SearchBarContainer>
   )
 }
